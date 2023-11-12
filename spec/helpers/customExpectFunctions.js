@@ -6,12 +6,16 @@
  */
 function recursiveExpectObjectLooseEquality(input, response) {
     for(const key in input) {
-        if(typeof input[key] !== 'object') {
-            expect(response[key]).toBe(input[key]);
+        if(typeof input[key] !== 'object' || Array.isArray(input[key])) {
+            // expect(response[key]).toBe(input[key]);
+            if(response[key] !== input[key]) {
+                throw new Error(`Expected ${response[key]} to be ${input[key]}`);
+            }
         } else {
             recursiveExpectObjectLooseEquality(input[key], response[key]);
         }
     }
+    return true;
 }
 
 

@@ -15,7 +15,7 @@ describe('GET /api/prostate/', () => {
     });
     // should return an array of objects
 });
-describe('GET /api/prostate/:caseId/:note/autofill', () => {
+describe('GET /api/prostate/:caseId/:note/autofill with one consult note', () => {
     beforeAll(async () => {
         await request.post(`${baseUrl}/api/prostate/consult`, consultMock);
     });
@@ -29,6 +29,7 @@ describe('GET /api/prostate/:caseId/:note/autofill', () => {
             headers: {
                 'Content-Type': 'application/json'
             }});
+        expect(response.status).toBe(200);
         expect(typeof response.data).toBe('object');
     });
 
@@ -37,16 +38,18 @@ describe('GET /api/prostate/:caseId/:note/autofill', () => {
             headers: {
                 'Content-Type': 'application/json'
             }});
+        expect(response.status).toBe(200);
         const { data } = response;
         const { noteName, ...rest } = consultMock;
-        recursiveExpectObjectLooseEquality(rest, data);
+        expect(recursiveExpectObjectLooseEquality(rest, data)).toBe(true);
     });
 
-    it('should return only keys that exist on the requested note type', async () => {
+    it('should return only keys that exist on the requested note type, regardless of present data', async () => {
         const response = await request.get(`${baseUrl}/api/prostate/${testCaseId}/eot/autofill`, {
             headers: {
                 'Content-Type': 'application/json'
             }});
+        expect(response.status).toBe(200);
         const { data } = response;
         for(const key in data) {
             expect(eotShape.hasOwnProperty(key)).toBe(true);
@@ -58,7 +61,108 @@ describe('GET /api/prostate/:caseId/:note/autofill', () => {
             headers: {
                 'Content-Type': 'application/json'
             }});
-        console.log(response.status)
+        expect(response.status).toBe(204);
+        expect(response.data).toBeFalsy();
+    });
+});
+
+describe('GET /api/prostate/:caseId/:note/autofill with one eot note', () => {
+    beforeAll(async () => {
+        await request.post(`${baseUrl}/api/prostate/eot`, eotMock);
+    });
+
+    afterAll(async () => {
+        await request.delete(`${baseUrl}/api/prostate/${testCaseId}`);
+    });
+
+    it('should return an object', async () => {
+        const response = await request.get(`${baseUrl}/api/prostate/${testCaseId}/eot/autofill`, {
+            headers: {
+                'Content-Type': 'application/json'
+            }});
+        expect(response.status).toBe(200);
+        expect(typeof response.data).toBe('object');
+    });
+
+    it('should return an object with the same data as the mock object less the noteName', async () => {
+        const response = await request.get(`${baseUrl}/api/prostate/${testCaseId}/eot/autofill`, {
+            headers: {
+                'Content-Type': 'application/json'
+            }});
+        expect(response.status).toBe(200);
+        const { data } = response;
+        const { noteName, ...rest } = eotMock;
+        expect(recursiveExpectObjectLooseEquality(rest, data)).toBe(true);
+    });
+
+    it('should return only keys that exist on the requested note type, regardless of present data', async () => {
+        const response = await request.get(`${baseUrl}/api/prostate/${testCaseId}/otv/autofill`, {
+            headers: {
+                'Content-Type': 'application/json'
+            }});
+        expect(response.status).toBe(200);
+        const { data } = response;
+        for(const key in data) {
+            expect(otvShape.hasOwnProperty(key)).toBe(true);
+        }
+    });
+
+    it('should return an with status 204 and no data if no meta note exists with a given caseId', async () => {
+        const response = await request.get(`${baseUrl}/api/prostate/incorrect_case_id/consult/autofill`, {
+            headers: {
+                'Content-Type': 'application/json'
+            }});
+        expect(response.status).toBe(204);
+        expect(response.data).toBeFalsy();
+    });
+});
+
+describe('GET /api/prostate/:caseId/:note/autofill with one otv note', () => {
+    beforeAll(async () => {
+        await request.post(`${baseUrl}/api/prostate/otv`, otvMock);
+    });
+
+    afterAll(async () => {
+        await request.delete(`${baseUrl}/api/prostate/${testCaseId}`);
+    });
+
+    it('should return an object', async () => {
+        const response = await request.get(`${baseUrl}/api/prostate/${testCaseId}/otv/autofill`, {
+            headers: {
+                'Content-Type': 'application/json'
+            }});
+        expect(response.status).toBe(200);
+        expect(typeof response.data).toBe('object');
+    });
+
+    it('should return an object with the same data as the mock object less the noteName', async () => {
+        const response = await request.get(`${baseUrl}/api/prostate/${testCaseId}/otv/autofill`, {
+            headers: {
+                'Content-Type': 'application/json'
+            }});
+        expect(response.status).toBe(200);
+        const { data } = response;
+        const { noteName, ...rest } = otvMock;
+        expect(recursiveExpectObjectLooseEquality(rest, data)).toBe(true);
+    });
+
+    it('should return only keys that exist on the requested note type, regardless of present data', async () => {
+        const response = await request.get(`${baseUrl}/api/prostate/${testCaseId}/eot/autofill`, {
+            headers: {
+                'Content-Type': 'application/json'
+            }});
+        expect(response.status).toBe(200);
+        const { data } = response;
+        for(const key in data) {
+            expect(eotShape.hasOwnProperty(key)).toBe(true);
+        }
+    });
+
+    it('should return an with status 204 and no data if no meta note exists with a given caseId', async () => {
+        const response = await request.get(`${baseUrl}/api/prostate/incorrect_case_id/consult/autofill`, {
+            headers: {
+                'Content-Type': 'application/json'
+            }});
         expect(response.status).toBe(204);
         expect(response.data).toBeFalsy();
     });
