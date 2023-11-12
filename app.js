@@ -13,7 +13,7 @@ mongoose
       MONGODB_CONNECT
   )
   .then(() => console.log("MongoDB connected."))
-  .catch(err => console.log(err));
+  .catch(console.error);
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));

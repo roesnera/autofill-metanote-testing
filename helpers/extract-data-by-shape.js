@@ -15,14 +15,19 @@ exports.extractDataByShape = function extractDataByShape(source, shape) {
           // Check if the current field is an object and not an array or null
           if (shape[key] && typeof shape[key] === 'object' && !Array.isArray(shape[key])) {
             // Recursively extract data for nested objects
-            extracted[key] = extract(source[key], shape[key]);
+
+            // If source is null, shape should be filled with empty strings
+            if(!source) {
+              extracted[key] = fillWithEmptyStrings(shape[key]);
+            }
+            else {
+              extracted[key] = extract(source[key], shape[key]);
+            }
           } else {
             // Directly assign the value from the source object
             if(!!source){
               extracted[key] = source[key];
             } else {
-              console.log(shape[key]);
-              console.log(fillWithEmptyStrings(shape[key]));
               extracted[key] = fillWithEmptyStrings(shape[key]);
             }
           }

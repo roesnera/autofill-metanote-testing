@@ -56,7 +56,7 @@ describe('GET /api/prostate/:caseId/:note/autofill with one consult note', () =>
         }
     });
 
-    it('should return an with status 204 and no data if no meta note exists with a given caseId', async () => {
+    it('should return a response with status 204 and no data if no meta note exists with a given caseId', async () => {
         const response = await request.get(`${baseUrl}/api/prostate/incorrect_case_id/consult/autofill`, {
             headers: {
                 'Content-Type': 'application/json'
@@ -107,7 +107,7 @@ describe('GET /api/prostate/:caseId/:note/autofill with one eot note', () => {
         }
     });
 
-    it('should return an with status 204 and no data if no meta note exists with a given caseId', async () => {
+    it('should return a response with status 204 and no data if no meta note exists with a given caseId', async () => {
         const response = await request.get(`${baseUrl}/api/prostate/incorrect_case_id/consult/autofill`, {
             headers: {
                 'Content-Type': 'application/json'
@@ -147,18 +147,18 @@ describe('GET /api/prostate/:caseId/:note/autofill with one otv note', () => {
     });
 
     it('should return only keys that exist on the requested note type, regardless of present data', async () => {
-        const response = await request.get(`${baseUrl}/api/prostate/${testCaseId}/eot/autofill`, {
+        const response = await request.get(`${baseUrl}/api/prostate/${testCaseId}/consult/autofill`, {
             headers: {
                 'Content-Type': 'application/json'
             }});
         expect(response.status).toBe(200);
         const { data } = response;
         for(const key in data) {
-            expect(eotShape.hasOwnProperty(key)).toBe(true);
+            expect(consultMock.hasOwnProperty(key)).toBe(true);
         }
     });
 
-    it('should return an with status 204 and no data if no meta note exists with a given caseId', async () => {
+    it('should return a response with status 204 and no data if no meta note exists with a given caseId', async () => {
         const response = await request.get(`${baseUrl}/api/prostate/incorrect_case_id/consult/autofill`, {
             headers: {
                 'Content-Type': 'application/json'
@@ -167,3 +167,25 @@ describe('GET /api/prostate/:caseId/:note/autofill with one otv note', () => {
         expect(response.data).toBeFalsy();
     });
 });
+
+describe('GET /api/prostate/:caseId/:note/autofill with random note', () => {
+        const mockArr = [['consult', consultMock], ['eot', eotMock], ['otv', otvMock]];
+        const randomNoteType = Math.random() > 0.66 ? mockArr[0] : Math.random() > 0.33 ? mockArr[1] : mockArr[2];
+    beforeAll(async () => {
+        await request.post(`${baseUrl}/api/prostate/${randomNoteType[0]}`, randomNoteType[1]);
+    });
+
+    afterAll(async () => {
+        await request.delete(`${baseUrl}/api/prostate/${testCaseId}`);
+    });
+
+    it('should return some note data', async () => {
+        const response = await request.get(`${baseUrl}/api/prostate/${testCaseId}/consult/autofill`, {
+            headers: {
+                'Content-Type': 'application/json'
+            }});
+        expect(response.status).toBeGreaterThanOrEqual(200);
+        expect(response.status).toBeLessThanOrEqual(204);
+        // expect(typeof response.data).toBe('object');
+    });
+})

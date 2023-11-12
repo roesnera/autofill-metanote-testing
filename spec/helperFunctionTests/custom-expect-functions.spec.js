@@ -24,4 +24,10 @@ describe('recursiveExpectObjectLooseEquality', () => {
         const obj2 = { a: 1, b: { d: 3 } };
         expect(() => recursiveExpectObjectLooseEquality(obj1, obj2)).toThrowError();
     });
+
+    it('should fail and throw error for two objects where the first object has more properties than the second', () => {
+        const obj1 = { a: 1, b: { c: 2 }, d: 3 };
+        const obj2 = { a: 1, b: { c: 2 } };
+        expect(() => recursiveExpectObjectLooseEquality(obj1, obj2)).toThrowError();
+    });
 });

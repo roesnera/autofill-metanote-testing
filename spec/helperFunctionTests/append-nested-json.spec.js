@@ -28,7 +28,6 @@ describe('mergeNestedObjects', () => {
         const obj3 = { c: { b: 1 } };
         const obj4 = { c: { c: 2 } };
         const result = mergeNestedObjects([obj1, obj2, obj3, obj4]);
-        console.log(result);
         expect(result).toEqual({ a:1, c: { b: 1, c: 2 }, b: 2 });
     });
 });

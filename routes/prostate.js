@@ -35,26 +35,22 @@ router.get('/:caseId/:note/autofill', async (req, res) => {
     try {
         // get prostateNote object that is prefilled with relevant data from most recent notedata
         const prostateMetaNote = await ProstateMetaNote.findOne({ caseId });
-        console.log("meta note found");
+        if(!prostateMetaNote) throw new Error('No meta note found for caseId: ' + caseId);
         let noteShape = schemaToJson(modelMap[noteName]);
-        console.log("note shape generated: ");
-        console.log(noteShape);
         delete noteShape.noteName;
         let prostateNote = extractDataByShape(prostateMetaNote, noteShape);
-        console.log("meta note data extracted");
 
         delete prostateNote._id;
         delete prostateNote.__v;
         delete prostateNote.__t;
 
-        console.log(prostateNote);
         res.status(200).json(prostateNote);
       } catch (err) {
         // do not expose error message to user
         // use internal server error message instead
         // send something user friendly to client
         // possibly empty default object
-        console.log(err);
+        console.error(err);
         res.status(204).json({});
     }
 });

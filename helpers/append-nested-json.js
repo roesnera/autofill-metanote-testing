@@ -19,7 +19,6 @@ function mergeNestedObjects(objects) {
           }
         } else {
           // Otherwise, just add the key-value pair
-          // console.log("assigning "+target+" at key "+key+" the value "+source[key])
           target[key] = source[key];
         }
       }

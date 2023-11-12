@@ -28,7 +28,6 @@ const stringDefault = {
       } else if(dateString.length === 0) {
         return null; // '';
       } else {
-        console.log('Date:' + dateString.split('@')[0]);
         return new Date(dateString.split('@')[0]);
       }
   };

@@ -16,7 +16,7 @@ const prostateNoteSchema = mongoose.Schema({
 });
 
 prostateNoteSchema.post('save', function(doc) {
-  updateMetaNote(doc).catch(err => console.log(err));
+  updateMetaNote(doc).catch(console.error);
 })
 
 const ProstateNote = mongoose.model('ProstateNote', prostateNoteSchema);
@@ -32,8 +32,12 @@ const modelMap = {
 }
 
 // document default values blindspot here and in readme!
+
+/**
+ * updates the entry in the MetaNote table based on the data in the note
+ * @param {Object} doc - the note document that was saved
+*/
 async function updateMetaNote(doc) {
-  console.log("Updating meta note function called");
   const noteData = doc.toObject();
 
   // Remove the version key and any other fields that should not be updated
@@ -42,7 +46,6 @@ async function updateMetaNote(doc) {
   delete noteData._id;
   delete noteData.noteName;
 
-  console.log(noteData);
 
   // Assuming noteData has an identifier like caseId that links it to the ProstateMetaNote
   const { caseId, ...updateFields } = noteData;
