@@ -60,17 +60,4 @@ exports.extractDataByShape = function extractDataByShape(source, shape) {
     }
 }
 
-function replaceUndefinedWithNull(obj) {
-  Object.keys(obj).forEach(key => {
-      if (typeof obj[key] === 'object' && obj[key] !== null && typeof obj[key] !== 'string') {
-          // Recursive call for nested objects
-          replaceUndefinedWithNull(obj[key]);
-      } else if (obj[key] === undefined) {
-          // Replace undefined with null
-          obj[key] = null;
-      }
-  });
-}
-
-
   exports.fillWithEmptyStrings = fillWithEmptyStrings;

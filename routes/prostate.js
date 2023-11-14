@@ -17,7 +17,8 @@ router.get('/', async (req, res) => {
     const prostateNotes = await ProstateNote.find();
     res.json(prostateNotes);
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    console.error(err);
+    res.status(500);
   }
 });
 
