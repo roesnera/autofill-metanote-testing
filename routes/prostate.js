@@ -67,6 +67,9 @@ router.post('/:note/', async (req, res) => {
   const { note: noteName } = req.params;
   const data = req.body;
   const prostateNote = await saveNote(noteName, data);
+  delete prostateNote._id;
+  delete prostateNote.__v;
+  delete prostateNote.__t;
   res.status(201).json(prostateNote);
 });
 

@@ -1,19 +1,39 @@
 const mongoose = require('mongoose');
 
-function createMongooseSchemaFromObject(obj) {
+/**
+ * Creates a Mongoose schema from a JavaScript object. Made to accept objects in the format produced by describeSchema()
+ * @param {Object} obj - The JavaScript object to create the schema from. Can be nested, but values should be string representation of datatypes.
+ * @param {boolean} [topLevel=true] - Whether or not this is the top level object.
+ * @returns {mongoose.Schema|Object} - The Mongoose schema or schema definition.
+ */
+function createMongooseSchemaFromObject(obj, topLevel = true) {
     const schemaDefinition = {};
 
     for (const [key, value] of Object.entries(obj)) {
-        if (typeof value === 'object' && value !== null) {
+        if(Array.isArray(value) && typeof value !== "string") {
+            if(typeof value[0] === "object" && typeof value[0] !== "string") {
+                // If the value is an array, create a schema for the array elements
+                schemaDefinition[key] = [createMongooseSchemaFromObject(value[0], false)];
+            } else {
+                // If the value is an array of primitive types, convert the datatype to the corresponding Mongoose type
+                schemaDefinition[key] = [convertToMongooseType(value[0])];
+            }
+        } else if (typeof value === 'object' && value !== null && typeof value !== "string") {
             // Recursively process nested objects
-            schemaDefinition[key] = createMongooseSchemaFromObject(value);
+            schemaDefinition[key] = createMongooseSchemaFromObject(value, false);
         } else {
             // Convert the datatype to the corresponding Mongoose type
             schemaDefinition[key] = convertToMongooseType(value);
         }
     }
 
-    return new mongoose.Schema(schemaDefinition);
+    if (topLevel) {
+        // If this is the top level object, wrap it in a schema
+        return new mongoose.Schema(schemaDefinition);
+    } else {
+        // Otherwise, just return the schema definition
+        return schemaDefinition;
+    }
 }
 
 function convertToMongooseType(type) {

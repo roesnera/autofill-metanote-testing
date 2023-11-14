@@ -2,6 +2,13 @@ const { Schema } = require('mongoose');
 const _ = require('lodash');
 
 
+/**
+ * Converts a Mongoose schema to a JSON object describing its fields and types.
+ * @param {Schema} schema - The Mongoose schema to describe.
+ * @param {boolean} [stripId=false] - Whether to exclude the _id field from the description.
+ * @returns {Object} - A JSON object describing the schema's fields and types.
+ * @throws {Error} - If the parameter is not a Mongoose schema.
+ */
 function describeSchema(schema, stripId = false) {
     if(schema.schema){
       ({schema} = schema);
@@ -26,6 +33,15 @@ function describeSchema(schema, stripId = false) {
       switch(type) {
         case 'DocumentArray':
           type = [describeSchema(field, true)];
+          break;
+        case 'Array':
+          let elementType;
+          try {
+            elementType = field.caster.instance || 'Unknown';
+          } catch (error) {
+            elementType = 'Unknown';
+          }
+          type = [elementType];
           break;
       }
   

@@ -1,5 +1,11 @@
 const fs = require('fs');
 
+/**
+ * Merges an array of nested objects into a single object.
+ *
+ * @param {Object[]} objects - The array of objects to merge.
+ * @returns {Object} - The merged object.
+ */
 function mergeNestedObjects(objects) {
   const merge = (target, source) => {
     Object.keys(source).forEach((key) => {
