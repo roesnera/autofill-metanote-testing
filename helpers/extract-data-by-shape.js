@@ -49,12 +49,12 @@ exports.extractDataByShape = function extractDataByShape(source, shape) {
     for (const key in obj) {
         if (obj.hasOwnProperty(key)) {
             // Check if the property is an object and not an array
-            if ( obj[key] && typeof obj[key] === 'object' && !Array.isArray(obj[key]) && typeof obj[key] !== 'string') {
+            if ( obj[key] && typeof obj[key] === 'object' || Array.isArray(obj[key]) && typeof obj[key] !== 'string') {
                 // Recursive call for nested object
                 fillWithEmptyStrings(obj[key]);
             } else {
                 // Set terminal value to an empty string
-                obj[key] = null;
+                obj[key] = "";
             }
         }
     }
