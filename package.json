@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jasmine"
+    "test": "nyc jasmine"
   },
   "keywords": [],
   "author": "",
@@ -19,5 +19,14 @@
     "mongoose": "^8.0.0",
     "request": "^2.88.2",
     "supertest": "^6.3.3"
+  },
+  "devDependencies": {
+    "nyc": "^15.1.0"
+  },
+  "nyc": {
+    "exclude": [
+      "spec/",
+      "models/helpers.js"
+    ]
   }
 }
