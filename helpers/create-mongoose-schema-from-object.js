@@ -7,10 +7,11 @@ const mongoose = require('mongoose');
  * @returns {mongoose.Schema|Object} - The Mongoose schema or schema definition.
  */
 function createMongooseSchemaFromObject(obj, topLevel = true) {
+    // console.log(obj);
     const schemaDefinition = {};
 
     for (const [key, value] of Object.entries(obj)) {
-        if(Array.isArray(value) && typeof value !== "string") {
+        if(Array.isArray(value)) {
             if(typeof value[0] === "object" && typeof value[0] !== "string") {
                 // If the value is an array, create a schema for the array elements
                 schemaDefinition[key] = [createMongooseSchemaFromObject(value[0], false)];
@@ -23,7 +24,14 @@ function createMongooseSchemaFromObject(obj, topLevel = true) {
             schemaDefinition[key] = createMongooseSchemaFromObject(value, false);
         } else {
             // Convert the datatype to the corresponding Mongoose type
-            schemaDefinition[key] = convertToMongooseType(value);
+
+            // If the key is "type", wrap the value in an object with a "type" property, 
+            // otherwise mongoose will interpret it as the type for whetever object the key is embedded in
+            if(key==="type"){
+                schemaDefinition[key] = {type: convertToMongooseType(value)};
+            } else {
+                schemaDefinition[key] = convertToMongooseType(value);
+            }
         }
     }
 

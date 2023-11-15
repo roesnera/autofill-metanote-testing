@@ -1,0 +1,66 @@
+{
+  "presentOncologic": {
+    "biopsies": [
+      {
+        "date": "Date",
+        "type": "String",
+        "other": "String",
+        "gleason": {
+          "useInStaging": "Boolean",
+          "primary": "String",
+          "secondary": "String",
+          "tertiary": "String",
+          "coresPositive": "Number",
+          "totalCores": "Number",
+          "total": "Number"
+        }
+      }
+    ],
+    "prostatectomy": {
+      "performed": "Boolean",
+      "date": "Date",
+      "primary": "String",
+      "secondary": "String",
+      "coresPositive": "Number",
+      "coresNegative": "Number",
+      "ece": "String",
+      "svi": "String",
+      "involvedMargin": "Boolean",
+      "description": "String"
+    },
+    "hormones": "Boolean",
+    "radiotherapy": "Boolean",
+    "radiotherapyDescription": "String",
+    "brachytherapy": {
+      "treatment": "Boolean",
+      "date": "Date"
+    },
+    "externalBeam": {
+      "treatment": "Boolean",
+      "endDate": "Date"
+    },
+    "nodalStaging": {
+      "date": "Date",
+      "method": "String",
+      "positiveNode": "String",
+      "negativeNode": "String",
+      "description": "String"
+    },
+    "systemicTherapy": {
+      "performed": "Boolean",
+      "hormones": {
+        "performed": "Boolean",
+        "endDate": "Date",
+        "startDate": "Date",
+        "agent": "String"
+      },
+      "chemotherapy": {
+        "performed": "Boolean",
+        "endDate": "Date",
+        "startDate": "Date",
+        "agent": "String"
+      },
+      "description": "String"
+    }
+  }
+}

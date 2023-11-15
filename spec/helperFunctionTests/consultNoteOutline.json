@@ -1,0 +1,295 @@
+{
+    "chiefComplaint": "String",
+    "historyPresentIllness": "String",
+    "pastMedicalHistory": "String",
+    "pastMedicalHistoryLoaded": "Boolean",
+    "pastSurgicalHistory": "String",
+    "pastSurgicalHistoryLoaded": "Boolean",
+    "militaryHistory": "String",
+    "militaryHistoryLoaded": "Boolean",
+    "allergies": "String",
+    "allergiesLoaded": "Boolean",
+    "activeMedication": "String",
+    "activeMedicationLoaded": "Boolean",
+    "qualityOfLife": [
+      {
+        "instrument": "String",
+        "score": "Number",
+        "incompleteEmptying": "Number",
+        "frequency": "Number",
+        "intermittency": "Number",
+        "urgency": "Number",
+        "weakStream": "Number",
+        "straining": "Number",
+        "nocturia": "Number"
+      }
+    ],
+    "_id": "ObjectId",
+    "diseaseSite": "String",
+    "hasBeenLoaded": "Boolean",
+    "noteName": "String",
+    "medicalRationale": "String",
+    "consent": "Boolean",
+    "assessment": "String",
+    "presentOncologic": {
+      "biopsies": [
+        {
+          "date": "Date",
+          "type": "String",
+          "other": "String",
+          "gleason": {
+            "useInStaging": "Boolean",
+            "primary": "String",
+            "secondary": "String",
+            "tertiary": "String",
+            "coresPositive": "Number",
+            "totalCores": "Number",
+            "total": "Number"
+          }
+        }
+      ],
+      "prostatectomy": {
+        "performed": "Boolean",
+        "date": "Date",
+        "primary": "String",
+        "secondary": "String",
+        "coresPositive": "Number",
+        "coresNegative": "Number",
+        "ece": "String",
+        "svi": "String",
+        "involvedMargin": "Boolean",
+        "description": "String"
+      },
+      "hormones": "Boolean",
+      "radiotherapy": "Boolean",
+      "radiotherapyDescription": "String",
+      "brachytherapy": {
+        "treatment": "Boolean",
+        "date": "Date"
+      },
+      "externalBeam": {
+        "treatment": "Boolean",
+        "endDate": "Date"
+      },
+      "nodalStaging": {
+        "date": "Date",
+        "method": "String",
+        "positiveNode": "String",
+        "negativeNode": "String",
+        "description": "String"
+      },
+      "systemicTherapy": {
+        "performed": "Boolean",
+        "hormones": {
+          "performed": "Boolean",
+          "endDate": "Date",
+          "startDate": "Date",
+          "agent": "String"
+        },
+        "chemotherapy": {
+          "performed": "Boolean",
+          "endDate": "Date",
+          "startDate": "Date",
+          "agent": "String"
+        },
+        "description": "String"
+      }
+    },
+    "priorOncologic": [
+      {
+        "details": "String",
+        "surgery": {
+          "performed": "Boolean",
+          "type": "String",
+          "description": "String"
+        },
+        "radiotherapy": {
+          "radiotherapy": "Boolean",
+          "description": "String",
+          "brachytherapy": {
+            "treatment": "Boolean",
+            "date": "Date"
+          },
+          "externalBeam": {
+            "treatment": "Boolean",
+            "endDate": "Date"
+          }
+        },
+        "systemicTherapy": {
+          "performed": "Boolean",
+          "hormones": "Boolean",
+          "chemotherapy": {
+            "performed": "Boolean",
+            "date": "Date"
+          },
+          "description": "String"
+        }
+      }
+    ],
+    "stagingDescription": "String",
+    "comorbidConditions": {
+      "inflammatoryBowelDisease": "Boolean",
+      "collagenVascularDisease": "Boolean",
+      "cardiovascularDisease": "Boolean",
+      "psychiatricDisease": "Boolean",
+      "additionalDetailstreatment": "String"
+    },
+    "socialHistory": {
+      "include": "Boolean",
+      "smoking": {
+        "status": "String",
+        "years": "Number",
+        "packRate": "Number",
+        "unit": "String",
+        "description": "String"
+      },
+      "alcohol": {
+        "status": "String",
+        "drinksPerWeek": "Number"
+      },
+      "recreationalDrugs": {
+        "used": "Boolean",
+        "history": "String"
+      },
+      "freeText": "String",
+      "hazardousMaterialExposure": "String",
+      "family": {
+        "include": "Boolean",
+        "maritalStatus": "String",
+        "cancerCaseDescription": "String"
+      }
+    },
+    "kpsEcogOption": "String",
+    "kpsEcogScore": "String",
+    "kps": "String",
+    "ecog": "String",
+    "physicalExam": "String",
+    "vitals": {
+      "bloodPressureDiastolic": "Number",
+      "bloodPressureSystolic": "Number",
+      "bloodPressureDate": "Date",
+      "heartRate": "Number",
+      "heartRateDate": "Date",
+      "temperature": "Number",
+      "temperatureUnits": "String",
+      "temperatureDate": "Date",
+      "respiratoryRate": "Number",
+      "respiratoryRateDate": "Date",
+      "oxygenSaturationPercent": "Number",
+      "litersOfOxygen": "Number",
+      "oxygenSaturationDate": "Date",
+      "weight": "Number",
+      "weightUnits": "String",
+      "weightDate": "Date",
+      "height": "Number",
+      "heightUnits": "String",
+      "heightDate": "Date",
+      "hasBeenLoaded": "Boolean",
+      "updatedDate": "Date"
+    },
+    "labDescription": "String",
+    "includeBloodCount": "Boolean",
+    "includeRenalLabs": "Boolean",
+    "includeLiverLabs": "Boolean",
+    "boneScan": {
+      "performed": "Boolean",
+      "status": "String",
+      "date": "Date",
+      "results": "String",
+      "type": "String"
+    },
+    "pelvicCt": {
+      "performed": "Boolean",
+      "status": "String",
+      "date": "Date",
+      "results": "String"
+    },
+    "boneDensityAssessment": {
+      "performed": "Boolean",
+      "status": "String",
+      "date": "Date",
+      "results": "String"
+    },
+    "petCt": {
+      "performed": "Boolean",
+      "status": "String",
+      "date": "Date",
+      "results": "String",
+      "type": "String"
+    },
+    "pelvicMri": {
+      "performed": "Boolean",
+      "status": "String",
+      "date": "Date",
+      "results": "String"
+    },
+    "molecularTesting": {
+      "date": "Date",
+      "type": "String",
+      "description": "String"
+    },
+    "diagnosis": "String",
+    "treatmentOptions": {
+      "other": "Boolean",
+      "description": "String",
+      "radial": "Boolean",
+      "brachy": "Boolean",
+      "ebrt": "Boolean",
+      "sbrt": "Boolean",
+      "selected": "Boolean"
+    },
+    "clinical": {
+      "clinicalOptions": "String",
+      "clinicalDescription": "String"
+    },
+    "includeAllPsaInNote": "Boolean",
+    "primaryPSA": {
+      "collectionDate": "String",
+      "collectionTime": "String",
+      "value": "String",
+      "units": "String",
+      "normalRange": "String"
+    },
+    "histology": "String",
+    "histology2": "String",
+    "histology3": "String",
+    "TNMStaging": {
+      "TNM": "String",
+      "staging": "String",
+      "nccnRiskGroup": "String",
+      "groupStage": "String"
+    },
+    "protocol": "String",
+    "biopsyInfo": "String",
+    "generatedBiopsyInfo": "String",
+    "intent": "String",
+    "fractionation": "String",
+    "adtIntent": "String",
+    "description": "String",
+    "nextSteps": {
+      "spaceOAR": "Boolean",
+      "rectalSpacer": "Boolean",
+      "simulationRadiation": "Boolean",
+      "fiducialmarker": "Boolean",
+      "selectedFlag": "Boolean",
+      "treatmentFlag": "Boolean",
+      "furtherWorkupFlag": "Boolean",
+      "psamonitoringFlag": "Boolean",
+      "activeSurveillanceFlag": "Boolean",
+      "referralUrology": "Boolean",
+      "referralMedicalOncology": "Boolean",
+      "multidisciplinaryDiscussion": "Boolean",
+      "other": "Boolean",
+      "otherSpecific": "String",
+      "selected": "String",
+      "treatment": "String",
+      "furtherWorkup": "String",
+      "psaMonitoring": "String",
+      "activeSurveillance": "String"
+    },
+    "nutritionAssessment": "String",
+    "smokingCessation": "String",
+    "patientEducation": "String",
+    "painManagementDescription": "String",
+    "biopsySelection": "String"
+  }
